@@ -22,12 +22,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd src && uv sync --all-extras 2>/dev/null || true
-          uv pip install --system httpx pydantic rich openai jsonschema pytest pytest-asyncio
+          uv venv
+          uv pip install httpx pydantic rich openai jsonschema pytest pytest-asyncio
 
       - name: Run tests
         run: |
-          cd ${{ github.workspace }}
-          PYTHONPATH=src python -m pytest tests/ -v --tb=short
+          PYTHONPATH=src uv run python -m pytest tests/ -v --tb=short
         env:
           PYTHONDONTWRITEBYTECODE: "1"
